@@ -12,6 +12,14 @@ export const emailService = new EmailService(providers, idempotencyService);
 const app = express();
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.json({
+    message: "Welcome to the Email Service API",
+    endpoint: "/api/email/send",
+    methods: ["POST"],
+  })
+});
+
 app.use('/api/email', emailRoutes);
 
 const port = process.env.PORT || 5000;

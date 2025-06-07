@@ -12,7 +12,7 @@ export const emailController = async (req: Request, res: Response) => {
 
         const emailResult = await emailService.sendEmail(emailData)
         res.status(200).json({
-            message: "Email controller is working",
+            message: "Email Request Processed",
             results: emailResult
         });
 

@@ -4,7 +4,7 @@ export class MockProvider2 implements EmailProvider {
   private failureRate: number;
   private providerName: string = 'MockProvider2';
 
-  constructor(failureRate: number = 0.4) {
+  constructor(failureRate: number = 0.3) {
     this.failureRate = failureRate;
   }
   

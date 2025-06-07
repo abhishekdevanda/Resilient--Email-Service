@@ -1,6 +1,6 @@
-import { EmailService } from "../../src/services/email.service";
-import type { Email, EmailProvider,} from "../../src/interfaces/emails.interfaces";
-import { IdempotencyService } from "../../src/services/idempotency.service";
+import { EmailService } from "../../services/email.service";
+import type { Email, EmailProvider,} from "../../interfaces/emails.interfaces";
+import { IdempotencyService } from "../../services/idempotency.service";
 
 // 1. Mock the dependencies
 // We create mock providers to control their behavior (success/failure) in our tests.

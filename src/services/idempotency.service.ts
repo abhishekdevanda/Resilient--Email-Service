@@ -12,7 +12,8 @@ export class IdempotencyService {
     }
 
     private _generateKey(email: Email): string {
-        const keyData = `${email.to.join(",")}:${email.subject}:${email.body}`;
+        const sortedTo = [...email.to].sort();
+        const keyData = `${sortedTo.join(",")}:${email.subject}:${email.body}`;
         const hash = createHash("sha256").update(keyData).digest("hex");
         return `${this.keyPrefix}:${hash}`;
     }
@@ -32,5 +33,11 @@ export class IdempotencyService {
             console.warn(`Duplicate email request detected.`);
             return false; // It's a duplicate request
         }
+    }
+
+    public async deleteKey(email: Email): Promise<void> {
+        const idempotencyKey = this._generateKey(email);
+        await this.redis.del(idempotencyKey);
+        return
     }
 }

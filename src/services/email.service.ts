@@ -15,7 +15,6 @@ export class EmailService {
     }
 
     public async sendEmail(email: Email): Promise<EmailResult> {
-        const attempts: EmailAttemptLog[] = [];
 
         const isNewEmail = await this.idempotencyService.checkAndSet(email);
         if (!isNewEmail) {
@@ -26,6 +25,7 @@ export class EmailService {
                 timestamp: new Date(),
             };
         }
+        const attempts: EmailAttemptLog[] = [];
 
         // Loop through providers until one succeeds
         for (const provider of this.providers) {
@@ -44,6 +44,7 @@ export class EmailService {
 
         // If the loop completes without a successful send
         console.error(`All providers failed to send the email.`);
+        await this.idempotencyService.deleteKey(email);
         return {
             overallSuccess: false,
             finalProvider: 'None',
